@@ -12,7 +12,6 @@ class Point:
 
     def __init__(self, coords):
         """Initializes a Point with a list of coordinates."""
-
         self.coords = coords
         self.currCluster = None
 
@@ -37,18 +36,16 @@ class Point:
                 )
             )
 
-        # Hint: Refer to the formula given in README.md for the Euclidean distance
+        squared_diff = 0.0
+        for i in range(self.dim):
+            squared_diff += (self.coords[i] - other.coords[i]) ** 2
+        return math.sqrt(squared_diff)
 
-        # fill in
-
-        return 0
 
     def moveToCluster(self, dest):
         """Reassigns this Point to a new Cluster.
-
         Args:
           dest: A Cluster object the Point will move to.
-
         Returns:
           True if dest is different from the current cluster, False otherwise.
         """
@@ -63,10 +60,8 @@ class Point:
 
     def closest(self, objects):
         """Return the object that is closest to this point.
-
         Args:
           objects: A list of objects.
-
         Returns:
           The object in objects that is closest to this point. This
           object can be a Cluster or a Point.
@@ -95,14 +90,14 @@ def makePointList(data):
     #This function is outside Point Class.
     Args:
       data: A p-by-d numpy array.
-
     Returns:
       A list of length p containing d-dimensional Point objects, each Point's
       coordinates correspond to one row of data.
     """
-    # fill in
-    pass
-
+    points = []
+    for row in data:
+        points.append(Point(row))
+    return points
 
 if __name__ == "__main__":
     data = np.array(

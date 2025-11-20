@@ -1,18 +1,18 @@
 import math
 import numpy as np
 
-
 class Point:
     """An n-dimensional Point.
-
     Attributes:
       coords: A list of length n specifying each coordinate of the Point.
       currCluster: A reference to the Cluster object the Point is in.
     """
-
     def __init__(self, coords):
         """Initializes a Point with a list of coordinates."""
-        self.coords = coords
+        if isinstance(coords, np.ndarray):
+            self.coords = [float(x) for x in coords]
+        else:
+            self.coords = [float(x) for x in coords]
         self.currCluster = None
 
     @property
@@ -21,14 +21,11 @@ class Point:
 
     def distFrom(self, other):
         """Calculates distance between two Points.
-
         Args:
           other: The Point we are calculating the distance from.
-
         Returns:
           A float representing the Euclidean distance between this point and other.
         """
-        # Error checking, keep this here.
         if self.dim != other.dim:
             raise ValueError(
                 "dimension mismatch: self has dim {} and other has dim {}".format(
@@ -40,7 +37,6 @@ class Point:
         for i in range(self.dim):
             squared_diff += (self.coords[i] - other.coords[i]) ** 2
         return math.sqrt(squared_diff)
-
 
     def moveToCluster(self, dest):
         """Reassigns this Point to a new Cluster.
